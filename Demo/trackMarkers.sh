@@ -20,14 +20,14 @@ trackLogs() {
 inotifywait() {
   if isWindows; then
     buildINotifyWait
-    ./inotifywait.exe $@
+    ./inotifywait.exe "$@"
   else
-    inotifywait $@
+    inotifywait "$@"
   fi
 }
 
 isWindows() {
-  [[ -z $WINDIR ]] && echo 0 || echo 1
+  [[ ! -z $WINDIR ]]
 }
 
 buildINotifyWait() {

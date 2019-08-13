@@ -4,23 +4,23 @@ search="$1"
 if [ -z "$search" ]; then search='sqlservr'; fi
 
 main() {
-  trap 'kill $$' SIGINT
+  trap 'kill $(jobs -p)' SIGINT    
   
   touch stats.csv markers.csv
   ./kst.sh stats.kst &
 
-  trackStats \
-    | tee -a stats.csv &
-   
   trackMarkers \
-    | tee -a markers.csv
+    | tee -a markers.csv &
+
+  trackStats \
+    | tee -a stats.csv
 }
 
 trackStats() {
   tar cf - *.sh \
     | docker run -i --rm \
         --pid=host \
-        ubuntu sh -c '
+        ubuntu:xenial sh -c '
           tar xf -
           ./trackStats.sh "'"$search"'"
         '
