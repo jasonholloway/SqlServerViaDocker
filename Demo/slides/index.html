@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Docker in the Desert: A Testing Mirage</title>
+<meta name="author" content="jason"/>
+<meta name="description" content="The Testing Pyramid often collapses in on itself, especially in the spangly world of Microservices. Luckily, containers are here to pull it all together. Featuring Docker, SqlServer and a variety of camels."/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/sunblind.css" id="theme"/>
+
+<link rel="stylesheet" href="./custom.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section id="slide-1">
+<h2 id="1"><a id="orga2826ce"></a><span class="section-number-2">1</span> Pyramids of the World</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+</section>
+<section id="slide-1-0-1">
+<h4 id="1-0-1"><a id="org2eb71c3"></a><span class="section-number-4">1.0.1</span> Djoser - Stepped</h4>
+
+<div class="figure">
+<p><img src="./images/djoser.jpg" alt="djoser.jpg" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>2630BC</li>
+<li>stepped, 'staggering'</li>
+<li>6-tier</li>
+<li>loads of <i>mastabas</i> stacked</li>
+<li>earliest collossal mound in Egypt</li>
+<li>63m high (almost twice as tall as Stockport pyramid)</li>
+<li>Djoser was first pharaoh of dynasty, after unification of Upper and Lower Egypt: prosperity</li>
+<li>previously, Kingdomssplit by cascades of Nile</li>
+<li>build for him by the demi-god Imhotep</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-1-0-2">
+<h4 id="1-0-2"><a id="org3699ffe"></a><span class="section-number-4">1.0.2</span> Meidum - Collapsed</h4>
+
+<div class="figure">
+<p><img src="./images/meidum-pyramid.jpg" alt="meidum-pyramid.jpg" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Huni, son of Djoser, started it; Sneferu carried it on</li>
+<li>straight, disasterous</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-1-0-3">
+<h4 id="1-0-3"><a id="orgaedbf6d"></a><span class="section-number-4">1.0.3</span> Bent Pyramid</h4>
+
+<div class="figure">
+<p><img src="./images/bent-pyramid.jpg" alt="bent-pyramid.jpg" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Sneferu's first pyramid</li>
+<li>angle and technique of bricklaying changes abruptly half way up</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-1-0-4">
+<h4 id="1-0-4"><a id="org8266417"></a><span class="section-number-4">1.0.4</span> Great Pyramid of Giza - Success</h4>
+
+<div class="figure">
+<p><img src="./images/giza3.jpg" alt="giza3.jpg" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Pyramid of Khufu (bigger), Khafre (slightly smaller) and Menkaure (smaller, damaged)</li>
+<li>Khafre's retains a cap of polished limestone</li>
+<li>one of the seven wonders of the world, the only one still standing</li>
+<li>tallest on earth till 1300AD</li>
+<li>Khufu was Sneferu's son</li>
+<li>pyramids after were smaller, cheaper, naffer - few survive</li>
+<li><code>https://upload.wikimedia.org/wikipedia/commons/a/ac/Comparison_of_pyramids_SMIL.svg</code></li>
+
+</ul>
+
+</aside>
+
+
+</section>
+</section>
+<section>
+<section id="slide-2">
+<h2 id="2"><a id="orgde2f02f"></a><span class="section-number-2">2</span> The Testing Pyramid</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+</section>
+<section id="slide-2-0-1">
+<h4 id="2-0-1"><a id="orga3b925d"></a><span class="section-number-4">2.0.1</span> Pyramid</h4>
+
+<div class="figure">
+<p><img src="./images/testpyramid.1.png" alt="testpyramid.1.png" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>devised by Mike Cohn in 2009(AD)</li>
+<li>ambiguity of axes</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-2-0-2">
+<h4 id="2-0-2"><a id="org02cd6b1"></a><span class="section-number-4">2.0.2</span> Teardrop</h4>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="./images/teardrop.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>tautological tests very low value, with high maintenance
+taper off towards nothing</li>
+<li>sweetspot!</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-2-0-3">
+<h4 id="2-0-3"><a id="org0f02d13"></a><span class="section-number-4">2.0.3</span> Onion</h4>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="./images/onion.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>tests above and around ease refactoring</li>
+<li>tests below are like concrete</li>
+<li>reflects structure of implementation - simpler software at a courser granularity</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-2-0-4">
+<h4 id="2-0-4"><a id="org790106c"></a><span class="section-number-4">2.0.4</span> Spinning Top</h4>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="./images/spinningtop.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>SQLServer in particular! <b><b>**</b></b></li>
+<li>microservices pushing the horizontal line down</li>
+<li>previously HTTP pipeline was a barrier; not so anymore</li>
+<li>but in general, Processes outside of CLR</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-2-0-5">
+<h4 id="2-0-5"><a id="org46aa632"></a><span class="section-number-4">2.0.5</span> So&#x2026;</h4>
+<ul>
+<li class="fragment">sharp boundary, above which tests decay</li>
+<li class="fragment">microservices push boundary down further</li>
+<li class="fragment">pyramid collapses into its base</li>
+<li class="fragment">it'd be nice if&#x2026;
+<ul>
+<li>mid-range testing: cheaper!</li>
+<li>external resources: more like CLR!</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-3">
+<h2 id="3"><a id="org074d349"></a><span class="section-number-2">3</span> Process Wrangling</h2>
+<aside class="notes">
+<ul>
+<li>What is Docker? needs to be asked here</li>
+<li>not just processes, but resources</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-3-1">
+<h3 id="3-1"><a id="org94b8d09"></a><span class="section-number-3">3.1</span> Camel Market</h3>
+
+<div class="figure">
+<p><img src="./images/camel-market2.jpg" alt="camel-market2.jpg" />
+</p>
+</div>
+<aside class="notes">
+<ul>
+<li>contention</li>
+<li>unpreparedness</li>
+<li>lacks isolation</li>
+<li>lacks reliability</li>
+<li>lacks snappiness</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-3-2">
+<h3 id="3-2"><a id="org7654300"></a><span class="section-number-3">3.2</span> Ready to Ride</h3>
+
+<div class="figure">
+<p><img src="./images/camels-pool.jpg" alt="camels-pool.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-3-3">
+<h3 id="3-3"><a id="orgc31cd74"></a><span class="section-number-3">3.3</span> Docker</h3>
+<div style="width:100%">
+<div style="float:left;width:50%">
+
+<div class="figure">
+<p><img src="./images/docker.jpg" alt="docker.jpg" />
+</p>
+</div>
+</div>
+<div style="float:right;width:50%;padding-top:50px;">
+<ul>
+<li class="fragment">each process in its own little world: <b>isolated</b></li>
+<li class="fragment">environments made up of immutable layers: <b>reproducible</b></li>
+<li class="fragment">well-used tooling hiding complexities of deployment: <b>convenient</b></li>
+<li class="fragment"><p>
+potentially, very <b>realistic</b>
+</p>
+<aside class="notes">
+<ul>
+<li>so&#x2026; external resources made manageable</li>
+
+</ul>
+
+</aside>
+</div></li>
+
+</ul>
+</div>
+
+
+</section>
+<section id="slide-3-4">
+<h3 id="3-4"><a id="orga61dab4"></a><span class="section-number-3">3.4</span> SqlServer, on Docker</h3>
+<aside class="notes">
+<ul>
+<li>SqlServer basically an OS in itself - bypasses stuff</li>
+<li><a href="https://hub.docker.com/_/microsoft-mssql-server">https://hub.docker.com/_/microsoft-mssql-server</a></li>
+<li>(even has <i>Temporary Internet Files</i> folder inside the container)</li>
+
+</ul>
+
+</aside>
+<ul>
+<li>ported to Linux by Microsoft in 2017</li>
+<li>free for non-production use</li>
+<li>nestled inside experimental <i>Drawbridge</i> process - like a small enclave of virtual Windows</li>
+<li>so SqlServer inside Drawbridge inside Docker inside&#x2026;</li>
+
+</ul>
+
+</section>
+<section id="slide-3-5">
+<h3 id="3-5"><a id="orgc9fe298"></a><span class="section-number-3">3.5</span> Demo</h3>
+
+</section>
+<section id="slide-3-6">
+<h3 id="3-6"><a id="org92e960f"></a><span class="section-number-3">3.6</span> Convenient but slow-ish</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-4">
+<h2 id="4"><a id="org834e1a9"></a><span class="section-number-2">4</span> The Mirage</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+</section>
+<section id="slide-4-1">
+<h3 id="4-1"><a id="org62ce120"></a><span class="section-number-3">4.1</span> CRIU: Checkpoint/Restore</h3>
+<div style="width:100%">
+<div style="float:left;width:50%">
+
+<div class="figure">
+<p><object type="image/svg+xml" data="./images/criu.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+<div style="float:right;width:50%;padding-top:50px">
+<ul>
+<li class="fragment">freezes and unfreezes entire groups of processes, all at once!</li>
+<li class="fragment">main use case: live migrations between hosts</li>
+<li class="fragment">but - can be used for fast bootups too</li>
+
+</ul>
+</div>
+</div>
+
+<aside class="notes">
+<ul>
+<li>criogenics vs phoenix from flames</li>
+<li><a href="https://criu.org/Main_Page">https://criu.org/Main_Page</a></li>
+<li>v much criogenics - think wiring up a brain(?); <b>Software Criogenics</b></li>
+<li>2011 - same era as Docker (2013) and Drawbridge</li>
+<li>made by people who worked on Virtuozzo project, with forked kernel etc</li>
+<li>other C/R implementations, all involving customized kernels</li>
+<li>other use cases: diagnostics</li>
+<li>impossible for it to be perfect, as too many uncontrolled bits (tho, with more kernel integration&#x2026;)</li>
+<li>but, if the capture works once, it can be repeated</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-4-2">
+<h3 id="4-2"><a id="orge983aca"></a><span class="section-number-3">4.2</span> <img src="./images/criu-ultimate-goal.jpg" alt="criu-ultimate-goal.jpg" /></h3>
+</section>
+<section id="slide-4-3">
+<h3 id="4-3"><a id="org3f76249"></a><span class="section-number-3">4.3</span> Demo</h3>
+</section>
+<section id="slide-4-4">
+<h3 id="4-4"><a id="org540d2cd"></a><span class="section-number-3">4.4</span> Pretty Fast</h3>
+
+<div class="figure">
+<p><img src="./images/success.jpg" alt="success.jpg" />
+</p>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'None', // see README of reveal.js for options
+transitionSpeed: 'default',
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+,slideNumber: 'h.v', hash: true,});
+</script>
+</body>
+</html>

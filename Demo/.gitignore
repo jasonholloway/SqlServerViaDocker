@@ -1,0 +1,13 @@
+bin
+obj
+.idea
+.nuget
+.vs
+.vscode
+*.user
+*.stats
+*.csv
+
+inotify*
+Kst*
+*.zip

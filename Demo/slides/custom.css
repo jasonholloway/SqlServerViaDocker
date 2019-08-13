@@ -1,0 +1,19 @@
+span[class|=section-number] {
+  display: none;
+}
+
+img {
+	max-height: calc(66vh);
+	max-width: calc(66vw);
+}
+
+.org-svg {
+	border: none;
+	box-shadow: none;
+	max-height: calc(66vh);
+	max-width: calc(66vw);
+}
+
+.criu-images img {
+	height: 50%;
+}
