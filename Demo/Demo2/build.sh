@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 set -e
 
 (cd ../../sqlservr-base; docker build -t sqlservr-base .)
