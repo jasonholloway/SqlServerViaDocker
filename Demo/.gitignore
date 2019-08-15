@@ -9,5 +9,5 @@ obj
 *.csv
 
 inotify*
-Kst*
+Kst-*
 *.zip
