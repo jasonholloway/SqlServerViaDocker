@@ -4,9 +4,11 @@ search="$1"
 if [ -z "$search" ]; then search='sqlservr'; fi
 
 main() {
-  trap 'kill $(jobs -p)' SIGINT    
+  trap 'exit' INT TERM
+  trap 'kill -- -$$' EXIT
   
-  touch stats.csv markers.csv
+  > stats.csv
+  > markers.csv
   ./kst.sh stats.kst &
 
   trackMarkers \
@@ -22,6 +24,7 @@ trackStats() {
         --pid=host \
         ubuntu:xenial sh -c '
           tar xf -
+	  chmod +x *.sh
           ./trackStats.sh "'"$search"'"
         '
 }
