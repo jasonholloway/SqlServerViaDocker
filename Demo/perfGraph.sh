@@ -9,6 +9,7 @@ main() {
   
   > stats.csv
   > markers.csv
+
   ./kst.sh stats.kst &
 
   trackMarkers \
@@ -25,6 +26,7 @@ trackStats() {
         ubuntu:xenial sh -c '
           tar xf -
 	  chmod +x *.sh
+	  dos2unix *.sh
           ./trackStats.sh "'"$search"'"
         '
 }
