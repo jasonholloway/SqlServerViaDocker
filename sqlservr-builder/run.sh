@@ -5,10 +5,10 @@ if [[ -z "$baseImage" ]]; then
   baseImage='sqlservr-base'
 fi
 
-container=$(docker create -i --privileged --rm "$baseImage" sh -c '
+container=$(docker create -i --privileged "$baseImage" sh -c '
   tar xf -
   ./runApplySql.sh *.sql
-	./runCheckpoint.sh
+  ./runCheckpoint.sh
 ')
 
 trap "docker rm -f ${container} >&2 || true" EXIT
