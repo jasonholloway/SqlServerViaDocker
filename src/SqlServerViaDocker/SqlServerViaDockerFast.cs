@@ -33,7 +33,7 @@ namespace SqlServerViaDocker
             _dockerImage = dockerImage;
         }
 
-        public async Task Start(CancellationToken cancel = default)
+        public async Task Start(CancellationToken cancel = default(CancellationToken))
         {
             var docker = _lzDocker.Value;
             var deduced = _lzDeduced.Value;

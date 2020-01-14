@@ -11,4 +11,4 @@ builtImage="$(tar cf - *.sql \
                   -v //var/run/docker.sock:/var/run/docker.sock \
                   sqlservr-builder)"
       
-docker tag "$builtImage" sqlservr-tracking
+docker tag "$builtImage" sqlservr-camels

@@ -1,4 +1,4 @@
-﻿# sqlservr-tracking
+﻿# sqlservr-camels
 This is an example of a derived SqlServer/CRIU image built from `sqlservr-base` using `sqlservr-builder` and a preparatory sql script.
 
 No Dockerfile is involved, just a single short script.

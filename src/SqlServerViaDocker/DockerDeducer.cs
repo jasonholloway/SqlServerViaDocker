@@ -6,7 +6,7 @@ namespace SqlServerViaDocker
     public static class DockerDeducer
     {
         public static DockerDeduction Deduce()
-            => TryDockerHostEnvVar("SQLSERVER_DOCKER_HOST")
+            => TryDockerHostEnvVar("__SQLSERVER_DOCKER_HOST")
                ?? TryDockerHostEnvVar("DOCKER_HOST")
                ?? TryUnixSocket("/var/run/docker.sock")
                ?? TryWindowsPipe("docker_engine")

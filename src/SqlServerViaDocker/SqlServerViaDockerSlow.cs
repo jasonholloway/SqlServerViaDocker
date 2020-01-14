@@ -36,7 +36,7 @@ namespace SqlServerViaDocker
             _imageName = imageName;
         }
         
-        public async Task Start(CancellationToken cancel = default)
+        public async Task Start(CancellationToken cancel = default(CancellationToken))
         {
             var docker = _lzDocker.Value;
             var deduced = _lzDeduced.Value;
@@ -63,7 +63,7 @@ namespace SqlServerViaDocker
                             { ["1433/tcp"] = new[] { new PortBinding { HostPort = deduced.HostPorts} } }
                     },
                     ExposedPorts =new Dictionary<string, EmptyStruct>
-                        { ["1433/tcp"] = default },
+                        { ["1433/tcp"] = default(EmptyStruct) },
                     Env = new[] { "STOP_AFTER=1m" },
                 };
                 

@@ -1,4 +1,3 @@
-using System;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
@@ -7,52 +6,34 @@ namespace Demo2
 {
     public static class DatabasePopulatingExtensions
     {
-        public static Task<int> CreateConsignment(this IDbConnection conn)
-            => conn.ExecuteAsync($@"
-                INSERT INTO dbo.Consignments
+        public static Task<int> CreateRanch(this IDbConnection conn, string name)
+            => conn.QuerySingleAsync<int>($@"
+                INSERT INTO Ranches
                 VALUES (
-                    'consRefForAllLegsMpd1',
-                    DEFAULT,
-                    CONVERT(uniqueidentifier, '{Guid.NewGuid()}')
+                    @name
                 );
-                SELECT SCOPE_IDENTITY()");
-
-        public static Task<int> CreateCarrierConsignment(this IDbConnection conn, int consignmentId)
-            => conn.ExecuteAsync($@"
-                INSERT INTO dbo.CarrierConsignments 
-                VALUES (
-                    'carrRef', 
-                    'carrServiceRef', 
-                    'consRefForLegCarrier', 
-                    1234, 
-                    'consTrackingRef', 
-                    1,
-                    1, 
-                    {consignmentId}, 
-                    '2019-08-08', 
-                    'consRefForAllLegsMpd', 
-                    'carrierServiceName', 
-                    NULL,
-                    'GB',
-                    DEFAULT,
-                    NULL,
-                    '2020-01-01',
-                    NULL,
-                    NULL
-                );
-                SELECT SCOPE_IDENTITY()");
+                SELECT @@IDENTITY", 
+                new { name });
         
-        public static Task<int> CreateCarrierPackage(this IDbConnection conn, int carrierConsignmentId, int packageRefPerLegMpd)
-            => conn.ExecuteAsync($@"
-                INSERT INTO dbo.CarrierPackages
+        public static Task<int> CreateCamel(this IDbConnection conn, string name, string species, int age)
+            => conn.QuerySingleAsync<int>($@"
+                INSERT INTO Camels
                 VALUES (
-                    'packageRefByCarrier', 
-                    {packageRefPerLegMpd}, 
-                    'packageTrackingRef', 
-                    {carrierConsignmentId}, 
-                    'EC-000', 
-                    DEFAULT
+                    @name,
+                    @species,
+                    @age
                 );
-                SELECT SCOPE_IDENTITY()");
+                SELECT @@IDENTITY",
+                new { name, species, age });
+
+        public static Task<int> PlaceCamel(this IDbConnection conn, int ranchId, int camelId)
+            => conn.QuerySingleAsync<int>($@"
+                INSERT INTO Placements 
+                VALUES (
+                    @camelId,
+                    @ranchId
+                );
+                SELECT @@IDENTITY",
+                new { ranchId, camelId });
     }
 }
