@@ -6,10 +6,9 @@ set -e
 # which will apply them, checkpoint and return the created image hash
 # which we store in the $builtImage var and tag as 'sqlservr-tracking'
   
-tar cf - *.sql \
-  | docker run -i --rm \
-      -v //var/run/docker.sock:/var/run/docker.sock \
-      sqlservr-builder \
-  | read builtImage
+builtImage="$(tar cf - *.sql \
+              | docker run -i --rm \
+                  -v //var/run/docker.sock:/var/run/docker.sock \
+                  sqlservr-builder)"
       
 docker tag "$builtImage" sqlservr-tracking
